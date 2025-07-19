@@ -105,6 +105,7 @@ def get_time():
 @app.route("/reset")
 def reset_timer():
     new_time = datetime.now() + timedelta(hours=3)
+    print(f"[DEBUG] Resetting timer to: {new_time.isoformat()}")
     save_time(new_time)
     return jsonify({
         "message": f"⏱️ Timer reset to 3 hours from now: {new_time.strftime('%H:%M:%S')}."
