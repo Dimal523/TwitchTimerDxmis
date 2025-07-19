@@ -92,11 +92,24 @@ TIMER_TEMPLATE = """
 @app.route("/timer")
 def show_timer():
     return render_template_string(TIMER_TEMPLATE)
+    return jsonify({
+    "message": f"⏱️ Timer extended! New end time: {new_time.isoformat()}."
+})
+
 
 @app.route("/gettime")
 def get_time():
     target = get_current_time()
     return jsonify({"end_time": target.isoformat()})
+
+@app.route("/reset")
+def reset_timer():
+    new_time = datetime.now() + timedelta(hours=3)
+    save_time(new_time)
+    return jsonify({
+        "message": f"⏱️ Timer reset to 3 hours from now: {new_time.strftime('%H:%M:%S')}."
+    })
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=81)
