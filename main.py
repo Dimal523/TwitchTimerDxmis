@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template_string
 from datetime import datetime, timedelta
 import os
+from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 
@@ -104,11 +105,10 @@ def get_time():
 
 @app.route("/reset")
 def reset_timer():
-    new_time = datetime.now() + timedelta(hours=3)
-    print(f"[DEBUG] Resetting timer to: {new_time.isoformat()}")
+    new_time = datetime.now(timezone.utc) + timedelta(hours=3)  # 3 hours from now UTC
     save_time(new_time)
     return jsonify({
-        "message": f"⏱️ Timer reset to 3 hours from now: {new_time.strftime('%H:%M:%S')}."
+        "message": f"⏱️ Timer reset to 3 hours from now: {new_time.strftime('%H:%M:%S')} UTC."
     })
 
 
