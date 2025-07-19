@@ -13,7 +13,7 @@ def get_current_time():
             time_str = f.read().strip()
             try:
                 return datetime.fromisoformat(time_str)
-            except ValueError:
+            except Exception:
                 pass
     return datetime.now()
 
