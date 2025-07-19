@@ -32,11 +32,9 @@ def home():
 @app.route("/addtime")
 def add_time():
     current_time = get_current_time()
-    now = datetime.now()
-
+    now = datetime.now(timezone.utc)
     if current_time < now:
         current_time = now
-
     new_time = current_time + TIME_INCREMENT
     save_time(new_time)
 
